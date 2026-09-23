@@ -2,7 +2,10 @@ package com.github.tiagolofi.tev;
 
 import org.jboss.resteasy.reactive.RestQuery;
 
-import com.github.tiagolofi.tev.finance.TevFinance;
+import com.github.tiagolofi.tev.core.TevCore;
+import com.github.tiagolofi.tev.core.TevMetrics;
+import com.github.tiagolofi.tev.core.TevResponse;
+import com.github.tiagolofi.tev.functions.finance.TevFinance;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;

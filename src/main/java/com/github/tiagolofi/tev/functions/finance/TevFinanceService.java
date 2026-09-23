@@ -1,4 +1,4 @@
-package com.github.tiagolofi.tev.finance;
+package com.github.tiagolofi.tev.functions.finance;
 
 import java.util.Map;
 
@@ -10,8 +10,8 @@ import com.github.tiagolofi.client.openai.OpenAi;
 import com.github.tiagolofi.client.openai.OpenAiConfig;
 import com.github.tiagolofi.client.openai.OpenAiPrompt;
 import com.github.tiagolofi.client.openai.OpenAiRequest;
-import com.github.tiagolofi.tev.TevCore;
-import com.github.tiagolofi.tev.TevResponse;
+import com.github.tiagolofi.tev.core.TevCore;
+import com.github.tiagolofi.tev.core.TevResponse;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

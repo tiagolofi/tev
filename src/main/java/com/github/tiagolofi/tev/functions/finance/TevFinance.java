@@ -1,4 +1,4 @@
-package com.github.tiagolofi.tev.finance;
+package com.github.tiagolofi.tev.functions.finance;
 
 import java.util.List;
 import java.util.Map;

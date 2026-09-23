@@ -1,4 +1,4 @@
-package com.github.tiagolofi.tev;
+package com.github.tiagolofi.tev.core;
 
 public interface TevCore<T> {
     public TevResponse<T> get(String texto);

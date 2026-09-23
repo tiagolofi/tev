@@ -1,4 +1,4 @@
-package com.github.tiagolofi.tev;
+package com.github.tiagolofi.tev.core;
 
 public record TevResponse<T>(
     String tevName,

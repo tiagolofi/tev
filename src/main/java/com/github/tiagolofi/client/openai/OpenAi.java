@@ -3,7 +3,7 @@ package com.github.tiagolofi.client.openai;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.jboss.resteasy.reactive.RestHeader;
 
-import com.github.tiagolofi.tev.TevMetrics;
+import com.github.tiagolofi.tev.core.TevMetrics;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.Consumes;

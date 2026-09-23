@@ -1,4 +1,4 @@
-package com.github.tiagolofi.tev;
+package com.github.tiagolofi.tev.core;
 
 import java.lang.reflect.Parameter;
 
