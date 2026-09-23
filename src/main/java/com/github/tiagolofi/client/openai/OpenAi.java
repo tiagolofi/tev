@@ -3,6 +3,8 @@ package com.github.tiagolofi.client.openai;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.jboss.resteasy.reactive.RestHeader;
 
+import com.github.tiagolofi.tev.TevMetrics;
+
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -18,5 +20,6 @@ public interface OpenAi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/v1/responses")
-    public OpenAiResponse getResponse(@RestHeader("Authorization") String authorization, OpenAiRequest request);
+    @TevMetrics 
+    public OpenAiResponse v1Responses(@RestHeader("Authorization") String authorization, OpenAiRequest request);
 }

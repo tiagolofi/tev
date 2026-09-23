@@ -23,6 +23,7 @@ public class TevResource {
     @Path("/inference")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
+    @TevMetrics 
     public TevResponse<TevFinance> inference(@RestQuery String type, String texto) {
         switch (type) {
             case "finance":

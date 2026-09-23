@@ -39,7 +39,7 @@ public class TevFinanceService implements TevCore<TevFinance> {
 
         var request = new OpenAiRequest(prompt);
 
-        TevFinance tev = openAiClient.getResponse("Bearer " + config.apiKey(), request).output()
+        TevFinance tev = openAiClient.v1Responses("Bearer " + config.apiKey(), request).output()
             .stream()
             .filter(o -> o.isMessage())
             .findFirst()
