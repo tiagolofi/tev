@@ -800,6 +800,7 @@ def simulate():
     # --------------------------------------------------------
 
     now = datetime.now(BRAZIL_TZ)
+    # yersterday = now - pd.Timedelta(days=1)
 
     if data.index.tz is None:
         data.index = data.index.tz_localize(BRAZIL_TZ)
