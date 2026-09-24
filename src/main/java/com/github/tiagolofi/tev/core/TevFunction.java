@@ -1,6 +1,6 @@
 package com.github.tiagolofi.tev.core;
 
-public interface TevCore<T> {
+public interface TevFunction<T> {
     public TevResponse<T> get(String texto);
 
     public String promptId();

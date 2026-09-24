@@ -1,6 +1,6 @@
-package com.github.tiagolofi.tev.functions.finance;
+package com.github.tiagolofi.tev.functions.trading;
 
-import java.util.Map;
+import java.util.List;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
@@ -8,16 +8,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tiagolofi.client.openai.OpenAi;
 import com.github.tiagolofi.client.openai.OpenAiConfig;
+import com.github.tiagolofi.client.openai.OpenAiContent;
+import com.github.tiagolofi.client.openai.OpenAiInput;
 import com.github.tiagolofi.client.openai.OpenAiPrompt;
 import com.github.tiagolofi.client.openai.OpenAiRequest;
-import com.github.tiagolofi.tev.core.TevCore;
+import com.github.tiagolofi.tev.core.TevFunction;
 import com.github.tiagolofi.tev.core.TevResponse;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped 
-public class TevFinanceService implements TevCore<TevFinance> {
+public class TevTradingFunction implements TevFunction<TevTrading> {
     
     @Inject 
     OpenAiConfig config;
@@ -30,22 +32,33 @@ public class TevFinanceService implements TevCore<TevFinance> {
     ObjectMapper objectMapper;
 
     @Override 
-    public TevResponse<TevFinance> get(String texto) {
+    public TevResponse<TevTrading> get(String json) {
         var prompt = new OpenAiPrompt(
             promptId(),
-            promptVersion(),
-            Map.of("texto", texto)
+            promptVersion()
         );
 
-        var request = new OpenAiRequest(prompt);
+        var input = List.of(
+                new OpenAiInput(
+                "user",
+                List.of(
+                    new OpenAiContent(
+                        "input_text",
+                        "json: " + json
+                    )
+                )
+            )
+        );
 
-        TevFinance tev = openAiClient.v1Responses("Bearer " + config.apiKey(), request).output()
+        var request = new OpenAiRequest(prompt, input);
+
+        var tev = openAiClient.v1Responses("Bearer " + config.apiKey(), request).output()
             .stream()
             .filter(o -> o.isMessage())
             .findFirst()
             .map(o -> {
                 try {
-                    return objectMapper.readValue(o.getFirstContent().text(), TevFinance.class);
+                    return objectMapper.readValue(o.getFirstContent().text(), TevTrading.class);
                 } catch (JsonProcessingException e) {
                     return null;
                 }
@@ -62,7 +75,7 @@ public class TevFinanceService implements TevCore<TevFinance> {
 
     @Override
     public String promptVersion() {
-        return "3";
+        return "18";
     }
 
 }

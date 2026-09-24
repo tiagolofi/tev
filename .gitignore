@@ -3,6 +3,7 @@
 
 # Enviroment
 .env
+env/
 
 # Log file
 *.log

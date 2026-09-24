@@ -2,10 +2,10 @@ package com.github.tiagolofi.tev;
 
 import org.jboss.resteasy.reactive.RestQuery;
 
-import com.github.tiagolofi.tev.core.TevCore;
+import com.github.tiagolofi.tev.core.TevFunction;
 import com.github.tiagolofi.tev.core.TevMetrics;
 import com.github.tiagolofi.tev.core.TevResponse;
-import com.github.tiagolofi.tev.functions.finance.TevFinance;
+import com.github.tiagolofi.tev.functions.trading.TevTrading;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -20,17 +20,17 @@ import jakarta.ws.rs.core.MediaType;
 public class TevResource {
     
     @Inject 
-    TevCore<TevFinance> tevFinance;
+    TevFunction<TevTrading> trading;
 
     @POST 
     @Path("/inference")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     @TevMetrics 
-    public TevResponse<TevFinance> inference(@RestQuery String type, String texto) {
+    public TevResponse<TevTrading> inference(@RestQuery String type, String json) {
         switch (type) {
-            case "finance":
-                return tevFinance.get(texto);
+            case "trading":
+                return trading.get(json);
             default:
                 return null;
         }
