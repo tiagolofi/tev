@@ -27,10 +27,10 @@ public class TevResource {
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     @TevMetrics 
-    public TevResponse<TevTrading> inference(@RestQuery String type, String json) {
+    public TevResponse<TevTrading> inference(@RestQuery String type, String input) {
         switch (type) {
             case "trading":
-                return trading.get(json);
+                return trading.get(input);
             default:
                 return null;
         }

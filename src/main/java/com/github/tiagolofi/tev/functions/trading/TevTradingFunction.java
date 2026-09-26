@@ -1,16 +1,12 @@
 package com.github.tiagolofi.tev.functions.trading;
 
-import java.util.List;
-
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tiagolofi.client.openai.OpenAi;
 import com.github.tiagolofi.client.openai.OpenAiConfig;
-import com.github.tiagolofi.client.openai.OpenAiContent;
-import com.github.tiagolofi.client.openai.OpenAiInput;
-import com.github.tiagolofi.client.openai.OpenAiPrompt;
+import com.github.tiagolofi.client.openai.OpenAiReasoning;
 import com.github.tiagolofi.client.openai.OpenAiRequest;
 import com.github.tiagolofi.tev.core.TevFunction;
 import com.github.tiagolofi.tev.core.TevResponse;
@@ -32,25 +28,8 @@ public class TevTradingFunction implements TevFunction<TevTrading> {
     ObjectMapper objectMapper;
 
     @Override 
-    public TevResponse<TevTrading> get(String json) {
-        var prompt = new OpenAiPrompt(
-            promptId(),
-            promptVersion()
-        );
-
-        var input = List.of(
-                new OpenAiInput(
-                "user",
-                List.of(
-                    new OpenAiContent(
-                        "input_text",
-                        "json: " + json
-                    )
-                )
-            )
-        );
-
-        var request = new OpenAiRequest(prompt, input);
+    public TevResponse<TevTrading> get(String input) {
+        var request = new OpenAiRequest("gpt-5.6-terra", input, new OpenAiReasoning());
 
         var tev = openAiClient.v1Responses("Bearer " + config.apiKey(), request).output()
             .stream()
