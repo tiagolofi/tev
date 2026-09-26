@@ -2,14 +2,12 @@ package com.github.tiagolofi.tev.functions.trading;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tiagolofi.client.openai.OpenAi;
 import com.github.tiagolofi.client.openai.OpenAiConfig;
 import com.github.tiagolofi.client.openai.OpenAiReasoning;
 import com.github.tiagolofi.client.openai.OpenAiRequest;
 import com.github.tiagolofi.tev.core.TevFunction;
-import com.github.tiagolofi.tev.core.TevResponse;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -28,34 +26,11 @@ public class TevTradingFunction implements TevFunction<TevTrading> {
     ObjectMapper objectMapper;
 
     @Override 
-    public TevResponse<TevTrading> get(String input) {
-        var request = new OpenAiRequest("gpt-5.6-terra", input, new OpenAiReasoning());
+    public TevTrading get(String input) {
+        var request = new OpenAiRequest(config.model(), input, new OpenAiReasoning());
 
-        var tev = openAiClient.v1Responses("Bearer " + config.apiKey(), request).output()
-            .stream()
-            .filter(o -> o.isMessage())
-            .findFirst()
-            .map(o -> {
-                try {
-                    return objectMapper.readValue(o.getFirstContent().text(), TevTrading.class);
-                } catch (JsonProcessingException e) {
-                    return null;
-                }
-            })
-            .orElse(null);
-
-        return new TevResponse<>("finance", tev);
+        return openAiClient.v1Responses("Bearer " + config.apiKey(), request)
+            .getFirstContent(TevTrading.class);
     }
-
-    @Override
-    public String promptId() {
-        return "pmpt_6ab33dbafdec8194b4c49b34cb564b390477239e1a95e3f7";
-    }
-
-    @Override
-    public String promptVersion() {
-        return "18";
-    }
-
 }
 

@@ -427,8 +427,8 @@ def simulate(name, df, prompt, payload_builder):
                 payload
             )
 
-            decision = response.get("tevData", {}).get("decision", "ERRO").upper()
-            confidence = float(response.get("tevData", {}).get("confidence", 0))
+            decision = response.get("decision", "ERRO").upper()
+            confidence = float(response.get("confidence", 0))
 
             print(
                 f"Decisão: {decision} | "

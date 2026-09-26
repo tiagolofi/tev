@@ -23,15 +23,15 @@ public class TevMetricsInterceptor {
 
     @AroundInvoke 
     public Object logMetrics(InvocationContext context) throws Exception {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         String methodName = context.getMethod().getName();
         try {
             return context.proceed();
         } catch (Exception e) {
             throw e;
         } finally {
-            long endTime = System.currentTimeMillis();
-            long duration = endTime - startTime;
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime) / 1_000_000; // Convert to milliseconds
             if (NAME_METHOD_RESOUCE.equals(methodName)) {
                 Path path = context.getMethod().getAnnotation(Path.class);
                 Parameter[] parameters = context.getMethod().getParameters();
